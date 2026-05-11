@@ -1,0 +1,7 @@
+{
+    "sender": "Alice",
+    "receiver": "Bob",
+    "encrypted_aes_key": "U6spzIHMob/15deS+mQEHcBvCObdbKVDzg8ICQCu/bMsWB7V65hi3ViPII03xF8yLR27ogRApIfmC+Ms1z1sTbTaNWV2Msh/oaY4TEWyLhow47MF87vcIRT6A/k8lVkZCsnDnjequW3qb3NbcD7+tbCy6tv6Z8+tuZOyimb0EQ8bnQhw0v7bi99UZUWHU0K3FDvEdXTylbwzMuF/bvAusDT0GzhMG+QcKe18mQoURThEwgpaprdZVKIfVh/1Tvqnb4YkqTGQmjqHRr6CRC1MMj7U93bVBRdZePHnJj/4GYukJUEVMHiROqEedbgt8k2H66aV7R/vHMoB5Gd1dJcHWQ==",
+    "iv": "d/XaRQJevWoWS5Ng4X5rfw==",
+    "ciphertext": "Yyr+x3moTOBD11QcKvAFw+a6SXGUlxS+b9YQ9y7GATY="
+}
