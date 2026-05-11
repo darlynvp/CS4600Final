@@ -9,6 +9,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
+from Crypto.Hash import HMAC, SHA256
 
 # Default demo values for testing
 SENDER = "Alice"
@@ -51,6 +52,15 @@ def encrypt_aes_key_with_rsa(aes_key, receiver_public_key_file):
 
     return encrypted_aes_key
 
+def generate_hmac(mac_key, encrypted_aes_key, iv, ciphertext):
+    """
+    Generate HMAC-SHA256 
+    """
+    h = HMAC.new(mac_key, digestmod=SHA256)
+    h.update(encrypted_aes_key + iv + ciphertext)
+    return h.digest()
+
+
 def main():
     # Read the plaintext message from the file
     with open(PLAINTEXT_FILE, "r") as file:
@@ -62,13 +72,17 @@ def main():
     # Encrypt the AES key using the receiver's RSA public key
     encrypted_aes_key = encrypt_aes_key_with_rsa(aes_key, RECEIVER_PUBLIC_KEY_FILE)
 
+    # Use AES key for mac key for simplicity
+    mac = generate_hmac(aes_key, encrypted_aes_key, iv, ciphertext)
+
     # Prepare the data to be transmitted
     transmitted_data = {
         "sender": SENDER,
         "receiver": RECEIVER,
         "encrypted_aes_key": base64.b64encode(encrypted_aes_key).decode(),  # Encode to base64 for JSON serialization
         "iv": base64.b64encode(iv).decode(),  # Encode IV to base64 for JSON serialization
-        "ciphertext": base64.b64encode(ciphertext).decode()  # Encode ciphertext to base64 for JSON serialization
+        "ciphertext": base64.b64encode(ciphertext).decode(),  # Encode ciphertext to base64 for JSON serialization
+        "hmac": base64.b64encode(mac).decode() # Encode HMAC to base64 for JSON serialization
     }
 
     # Save the transmitted data to a JSON file

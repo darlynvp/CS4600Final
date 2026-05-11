@@ -8,12 +8,19 @@ import base64
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.Util.Padding import unpad
+from Crypto.Hash import HMAC, SHA256
 
 # Default demo values for testing
 RECEIVER = "Bob"
 TRANSMITTED_DATA_FILE = "Transmitted_Data.json"
 RECEIVER_PRIVATE_KEY_FILE = f"../{RECEIVER}_private.pem"
 
+def validate_HMAC (mac_key, encrypted_aes_key, iv, ciphertext, received_hmac):
+    h = HMAC.new(mac_key, digestmod=SHA256)
+    h.update(encrypted_aes_key + iv + ciphertext)
+    h.verify(received_hmac)
+    print("HMAC verified")
+   
 
 def decrypt_aes_key_with_rsa(encrypted_aes_key, receiver_private_key_file):
     """
@@ -50,9 +57,13 @@ def main():
     encrypted_aes_key = base64.b64decode(transmitted_data["encrypted_aes_key"])
     iv = base64.b64decode(transmitted_data["iv"])
     ciphertext = base64.b64decode(transmitted_data["ciphertext"])
+    received_hmac = base64.b64decode(transmitted_data["hmac"])
 
     # Decrypt the AES key using the receiver's RSA private key
     aes_key = decrypt_aes_key_with_rsa(encrypted_aes_key, RECEIVER_PRIVATE_KEY_FILE)
+
+	# Validate integrity
+    validate_HMAC(aes_key, encrypted_aes_key, iv, ciphertext, received_hmac)
 
     # Decrypt the message using the decrypted AES key and IV
     decrypted_message = decrypt_message_with_aes(ciphertext, aes_key, iv)
