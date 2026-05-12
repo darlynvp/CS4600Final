@@ -11,8 +11,8 @@ def gen_rsa_key_pair(user, key_size=2048):
     private_key = key.export_key() #exports a private key in PEM format
     public_key = key.publickey().export_key() #exports a public key in PEM format
 
-    private_key_file = f"{user}_private.pem" #Creates a local file for private key
-    public_key_file = f"{user}_public.pem" #Creates a local file for public key
+    private_key_file = f"../{user}_private.pem" #Creates a local file for private key
+    public_key_file = f"../{user}_public.pem" #Creates a local file for public key
 
     #Saves the private key to local file
     with open(private_key_file, "wb") as private_file:

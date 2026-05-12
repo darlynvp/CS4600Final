@@ -5,6 +5,7 @@
 
 import json
 import base64
+import sys
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.Util.Padding import unpad
@@ -18,9 +19,12 @@ RECEIVER_PRIVATE_KEY_FILE = f"../{RECEIVER}_private.pem"
 def validate_HMAC (mac_key, encrypted_aes_key, iv, ciphertext, received_hmac):
     h = HMAC.new(mac_key, digestmod=SHA256)
     h.update(encrypted_aes_key + iv + ciphertext)
-    h.verify(received_hmac)
-    print("HMAC verified")
-   
+    try:
+        h.verify(received_hmac)
+        print("HMAC verified")
+    except ValueError:
+        print("HMAC verification failed. The message may have been tampered with.")
+        sys.exit(1)
 
 def decrypt_aes_key_with_rsa(encrypted_aes_key, receiver_private_key_file):
     """
@@ -32,7 +36,11 @@ def decrypt_aes_key_with_rsa(encrypted_aes_key, receiver_private_key_file):
         receiver_private_key = RSA.import_key(key_file.read())
     
     cipher_rsa = PKCS1_OAEP.new(receiver_private_key)  # Create a new PKCS1_OAEP cipher object using the receiver's private key
-    aes_key = cipher_rsa.decrypt(encrypted_aes_key)     # Decrypt the AES key with the RSA private key
+    try:
+        aes_key = cipher_rsa.decrypt(encrypted_aes_key)     # Decrypt the AES key with the RSA private key
+    except ValueError:
+        print("AES key decryption failed")
+        sys.exit(1)
 
     return aes_key
 
@@ -43,8 +51,12 @@ def decrypt_message_with_aes(ciphertext, aes_key, iv):
     - decrypted plaintext message.
     """
     cipher = AES.new(aes_key, AES.MODE_CBC, iv)  # Create AES-256 cipher that uses CBC mode and starts with the same IV
-    padded_plaintext = cipher.decrypt(ciphertext)  # Decrypt the ciphertext
-    plaintext = unpad(padded_plaintext, AES.block_size).decode()  # Unpad and decode the plaintext
+    try:
+        padded_plaintext = cipher.decrypt(ciphertext)  # Decrypt the ciphertext
+        plaintext = unpad(padded_plaintext, AES.block_size).decode()  # Unpad and decode the plaintext
+    except ValueError:
+        print("Decryption failed")
+        sys.exit(1)
 
     return plaintext
 

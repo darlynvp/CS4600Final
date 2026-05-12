@@ -1,7 +1,8 @@
 {
     "sender": "Alice",
     "receiver": "Bob",
-    "encrypted_aes_key": "U6spzIHMob/15deS+mQEHcBvCObdbKVDzg8ICQCu/bMsWB7V65hi3ViPII03xF8yLR27ogRApIfmC+Ms1z1sTbTaNWV2Msh/oaY4TEWyLhow47MF87vcIRT6A/k8lVkZCsnDnjequW3qb3NbcD7+tbCy6tv6Z8+tuZOyimb0EQ8bnQhw0v7bi99UZUWHU0K3FDvEdXTylbwzMuF/bvAusDT0GzhMG+QcKe18mQoURThEwgpaprdZVKIfVh/1Tvqnb4YkqTGQmjqHRr6CRC1MMj7U93bVBRdZePHnJj/4GYukJUEVMHiROqEedbgt8k2H66aV7R/vHMoB5Gd1dJcHWQ==",
-    "iv": "d/XaRQJevWoWS5Ng4X5rfw==",
-    "ciphertext": "Yyr+x3moTOBD11QcKvAFw+a6SXGUlxS+b9YQ9y7GATY="
+    "encrypted_aes_key": "WhKKclsQRpQvGuqUyMMGxWgKp6ENGvYnlJuqCthbLsp70OkPW3OLD05MvmUId/yo3x4bfpe3y/P5lj2KT9YJAoYTUbzpV9Xq9J4Zs5EtFHMWqL59lObW5Pib9BlngTK+LdvLmnkDDtYNIhirsqa/PJ1yao04s9NtsdPPWdlEiqJ2ut5dz2XO4y9jCVCv6VfATxQO2chZzLXIDmqCgC2A1rKHQ/4aeuFAW/3aBAjhzg0SekojK6cyaB+/wddVKJUCj7SamA7MX9Nk//iQ69pfoKHhYm9gwAaH/dXPIbpuiraOgJYp02aGMd/5PgEZVfW98Zoh0k4DYGaCBD7zOcQOmQ==",
+    "iv": "G3Ue44kYpVQDC/Iu3HVFhw==",
+    "ciphertext": "7jDnWOqdf/BXvfjnBqTlk02TgDXd60tXWkqvf743Gwo=",
+    "hmac": "scvF41Sq+3AIvGnz6ppri5hE/1psndyIM40VlW2ULAM="
 }
